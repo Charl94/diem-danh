@@ -56,20 +56,45 @@ body {
     text-align: left; border-bottom: 1px solid #eee; padding-bottom: 1rem;
 }
 
-/* Khu vực chọn tổ */
+/* --- KHU VỰC CHỌN TỔ & NGÀY --- */
 .group-selector { margin-top: 1.5rem; }
-.group-selector label {
-    font-weight: 500; font-size: 1.1rem; color: #333; display: block;
+.group-selector-row {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 1.5rem; 
 }
+.group-selector-item {
+    flex: 1; 
+}
+.group-selector-item label {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 0.75rem; 
+}
+
+/* (CẬP NHẬT) Tùy chỉnh lại select và input */
+.group-dropdown-menu,
+.date-input {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333; /* Đảm bảo chữ màu đen */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Giữ font nhất quán */
+}
+/* Style riêng cho dropdown */
 .group-dropdown-menu {
-    width: 100%; padding: 0.875rem; border: 1px solid #ddd;
-    border-radius: 6px; font-size: 1rem; background-color: #fff;
-    cursor: pointer; margin-top: 0.75rem;
+    cursor: pointer;
 }
-.group-dropdown-menu:focus {
-    outline: none; border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+/* Style riêng cho ô ngày (để con trỏ đúng) */
+.date-input {
+    cursor: text;
 }
+
 
 /* Khu vực hiển thị danh sách NV */
 #employee-list-area {
@@ -87,7 +112,7 @@ body {
 /* --- BẢNG DANH SÁCH NHÂN VIÊN --- */
 .employee-table {
     width: 100%; border-collapse: collapse; margin-top: 1rem;
-    font-size: 0.95rem; table-layout: fixed; min-width: 600px; /* Giảm min-width */
+    font-size: 0.95rem; table-layout: fixed; min-width: 600px;
 }
 .employee-table th,
 .employee-table td {
@@ -98,13 +123,13 @@ body {
     background-color: #f4f4f4; color: #333; font-weight: 500;
 }
 
-/* (CẬP NHẬT) Tùy chỉnh độ rộng cột (5 cột) */
+/* Tùy chỉnh độ rộng cột (5 cột) */
 .col-stt { width: 8%; }
 .col-ten { width: 35%; }
-.col-check { width: 10%; } /* Áp dụng cho cả 2 cột check */
+.col-check { width: 10%; } 
 .col-ghichu { width: 37%; }
 
-/* (CẬP NHẬT) Căn giữa cho các cột (STT, Có, Vắng) */
+/* Căn giữa cho các cột (STT, Có, Vắng) */
 .employee-table th.col-stt,
 .employee-table th.col-check,
 .employee-table tbody td:nth-child(1), /* Cột STT */
@@ -113,19 +138,12 @@ body {
 {
     text-align: center;
 }
-
-/* (CẬP NHẬT) Căn trái input STT trên dòng mới */
-.employee-table tbody td:nth-child(1) .new-row-input
-{
+.employee-table tbody td:nth-child(1) .new-row-input {
     text-align: left;
 }
-
-/* Style cho radio button */
 .radio-check {
     width: 18px; height: 18px; cursor: pointer; accent-color: #007bff;
 }
-
-/* Style cho ô Ghi Chú */
 .notes-input {
     width: 100%; padding: 6px; border: 1px solid #ccc;
     border-radius: 4px; font-size: 0.9rem;
@@ -136,11 +154,13 @@ body {
 .table-actions {
     display: flex; justify-content: space-between;
     margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+    gap: 1rem; 
 }
 .action-button {
     padding: 0.75rem 1.5rem; border: none; border-radius: 6px;
     font-size: 1rem; font-weight: 500; cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s;
+    flex-grow: 1; 
 }
 .primary-button { background-color: #007bff; color: white; }
 .primary-button:hover {
@@ -164,6 +184,19 @@ body {
     color: #888; background-color: #f0f2f5;
 }
 
+/* --- STYLE CHO DÒNG BỊ LỖI --- */
+.row-highlight-error td {
+    border-top: 2px solid #D93025 !important; 
+    border-bottom: 2px solid #D93025 !important;
+    background-color: #FDF4F3;
+}
+.row-highlight-error td:first-child {
+    border-left: 2px solid #D93025 !important;
+}
+.row-highlight-error td:last-child {
+    border-right: 2px solid #D93025 !important;
+}
+
 /* --- RESPONSIVE CHO DI ĐỘNG --- */
 @media (max-width: 768px) {
     .header { padding: 1rem; }
@@ -171,6 +204,13 @@ body {
     .header-subtitle { font-size: 1rem; }
     .main-content { padding: 0.5rem; }
     .container { padding: 1.5rem; }
-    .table-actions { flex-direction: column; gap: 1rem; }
-    .action-button { width: 100%; }
+    
+    .table-actions {
+        gap: 0.5rem; 
+    }
+    .action-button {
+        width: auto; 
+        padding: 0.75rem 1rem; 
+        font-size: 0.9rem; 
+    }
 }
