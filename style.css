@@ -1,0 +1,176 @@
+/* CSS Reset cơ bản */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- HEADER --- */
+.header {
+    background-color: #005a9e; color: white; padding: 1.5rem;
+    text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-title { font-size: 2rem; font-weight: 600; }
+.header-subtitle { font-size: 1.125rem; font-weight: 300; margin-top: 0.25rem; }
+
+/* --- MAIN (Body chính) --- */
+.main-content {
+    flex-grow: 1; display: flex; justify-content: center;
+    align-items: flex-start; padding: 2rem;
+}
+.container {
+    background: #ffffff; padding: 2.5rem; border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1); width: 100%;
+    max-width: 400px; /* Bắt đầu với size cho login */
+    transition: max-width 0.4s ease-in-out;
+}
+.container h2 {
+    text-align: center; color: #1c1c1c;
+    margin-bottom: 1.5rem; font-weight: 500;
+}
+
+/* --- Form Đăng nhập --- */
+#login-section { width: 100%; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.form-group input {
+    width: 100%; padding: 0.875rem; border: 1px solid #ddd;
+    border-radius: 6px; font-size: 1rem;
+}
+.login-button {
+    width: 100%; padding: 0.875rem; background-color: #007bff;
+    color: white; border: none; border-radius: 6px;
+    cursor: pointer; font-size: 1rem; font-weight: 500;
+}
+.login-button:disabled { background-color: #a0a0a0; }
+#message { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+
+/* --- VÙNG LÀM VIỆC (SAU KHI ĐĂNG NHẬP) --- */
+#welcome-section { display: none; }
+#welcome-message {
+    text-align: left; border-bottom: 1px solid #eee; padding-bottom: 1rem;
+}
+
+/* Khu vực chọn tổ */
+.group-selector { margin-top: 1.5rem; }
+.group-selector label {
+    font-weight: 500; font-size: 1.1rem; color: #333; display: block;
+}
+.group-dropdown-menu {
+    width: 100%; padding: 0.875rem; border: 1px solid #ddd;
+    border-radius: 6px; font-size: 1rem; background-color: #fff;
+    cursor: pointer; margin-top: 0.75rem;
+}
+.group-dropdown-menu:focus {
+    outline: none; border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* Khu vực hiển thị danh sách NV */
+#employee-list-area {
+    margin-top: 2rem; border-top: 1px solid #eee;
+    padding-top: 1.5rem; display: none;
+}
+#loading-spinner {
+    display: none; text-align: center; font-size: 1rem;
+    color: #555; padding: 2rem;
+}
+#employee-table-container {
+    overflow-x: auto;
+}
+
+/* --- BẢNG DANH SÁCH NHÂN VIÊN --- */
+.employee-table {
+    width: 100%; border-collapse: collapse; margin-top: 1rem;
+    font-size: 0.95rem; table-layout: fixed; min-width: 600px; /* Giảm min-width */
+}
+.employee-table th,
+.employee-table td {
+    border: 1px solid #ddd; padding: 0.75rem 0.5rem;
+    text-align: left; vertical-align: middle; word-wrap: break-word;
+}
+.employee-table thead {
+    background-color: #f4f4f4; color: #333; font-weight: 500;
+}
+
+/* (CẬP NHẬT) Tùy chỉnh độ rộng cột (5 cột) */
+.col-stt { width: 8%; }
+.col-ten { width: 35%; }
+.col-check { width: 10%; } /* Áp dụng cho cả 2 cột check */
+.col-ghichu { width: 37%; }
+
+/* (CẬP NHẬT) Căn giữa cho các cột (STT, Có, Vắng) */
+.employee-table th.col-stt,
+.employee-table th.col-check,
+.employee-table tbody td:nth-child(1), /* Cột STT */
+.employee-table tbody td:nth-child(3), /* Cột Có Đi Làm */
+.employee-table tbody td:nth-child(4)  /* Cột Vắng */
+{
+    text-align: center;
+}
+
+/* (CẬP NHẬT) Căn trái input STT trên dòng mới */
+.employee-table tbody td:nth-child(1) .new-row-input
+{
+    text-align: left;
+}
+
+/* Style cho radio button */
+.radio-check {
+    width: 18px; height: 18px; cursor: pointer; accent-color: #007bff;
+}
+
+/* Style cho ô Ghi Chú */
+.notes-input {
+    width: 100%; padding: 6px; border: 1px solid #ccc;
+    border-radius: 4px; font-size: 0.9rem;
+}
+.notes-input:focus { outline: none; border-color: #007bff; }
+
+/* --- NÚT HÀNH ĐỘNG CỦA BẢNG --- */
+.table-actions {
+    display: flex; justify-content: space-between;
+    margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+}
+.action-button {
+    padding: 0.75rem 1.5rem; border: none; border-radius: 6px;
+    font-size: 1rem; font-weight: 500; cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+.primary-button { background-color: #007bff; color: white; }
+.primary-button:hover {
+    background-color: #0056b3; box-shadow: 0 4px 10px rgba(0,123,255,0.2);
+}
+.secondary-button {
+    background-color: #f0f2f5; color: #333; border: 1px solid #ccc;
+}
+.secondary-button:hover { background-color: #e2e6ea; }
+
+/* STYLE CHO INPUT TRÊN DÒNG MỚI */
+.new-row-input {
+    width: 100%; padding: 6px; border: 1px solid #ccc;
+    border-radius: 4px; font-size: 0.9rem;
+}
+.new-row-input:focus { outline: none; border-color: #007bff; }
+
+/* --- FOOTER --- */
+.footer {
+    text-align: center; padding: 0.5rem; font-size: 0.75rem;
+    color: #888; background-color: #f0f2f5;
+}
+
+/* --- RESPONSIVE CHO DI ĐỘNG --- */
+@media (max-width: 768px) {
+    .header { padding: 1rem; }
+    .header-title { font-size: 1.5rem; }
+    .header-subtitle { font-size: 1rem; }
+    .main-content { padding: 0.5rem; }
+    .container { padding: 1.5rem; }
+    .table-actions { flex-direction: column; gap: 1rem; }
+    .action-button { width: 100%; }
+}
