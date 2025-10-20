@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Liwayway - Kiểm vắng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="header-title">HR LIWAYWAY SÀI GÒN</h1>
+        <p class="header-subtitle">DANH SÁCH KIỂM VẮNG</p>
+    </header>
+
+    <main class="main-content">
+        <div class="container" id="main-container">
+            
+            <div id="login-section">
+                <h2>Đăng Nhập Hệ Thống</h2>
+                <div class="form-group">
+                    <label for="username">Mã NV:</label>
+                    <input type="text" id="username" placeholder="Nhập Mã NV (vd: PR2560)">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" placeholder="Nhập mật khẩu">
+                </div>
+                <button id="login-btn" class="login-button">Đăng Nhập</button>
+                <p id="message"></p>
+            </div>
+
+            <div id="welcome-section">
+                <h2 id="welcome-message">Chào, [Tên]!</h2>
+                
+                <div class="group-selector">
+                    <label for="group-dropdown">Chọn tổ để bắt đầu điểm danh:</label>
+                    <select id="group-dropdown" class="group-dropdown-menu">
+                        <option value="">-- Vui lòng chọn một tổ --</option>
+                    </select>
+                </div>
+
+                <div id="employee-list-area">
+                    <h3 id="employee-list-title" style="display: none;">Danh sách nhân viên</h3>
+                    <div id="loading-spinner">Đang tải danh sách...</div>
+                    <div id="employee-table-container">
+                        </div>
+                    
+                    <div class="table-actions">
+                        <button id="add-row-btn" class="action-button secondary-button">
+                            Thêm nhân viên
+                        </button>
+                        <button id="submit-btn" class="action-button primary-button">
+                            Gửi điểm danh (demo)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        Triển khai bởi Phòng Nhân Sự
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
