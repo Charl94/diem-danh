@@ -1,12 +1,12 @@
 /*
  * ==================================
  * File: script.js (Frontend Logic)
- * ĐÃ CẬP NHẬT: Bỏ Mã NV
+ * ĐÃ CẬP NHẬT: Input type="date"
  * ==================================
  */
 
 // Dán URL Web App của bạn vào đây
-const API_URL = "https://script.google.com/macros/s/AKfycbx9S6TYdb6ZV60z1CWZ6Oi9WvXuidCrUT3M1nZ9mGK38iwZ6ScziFXOB1PQN7H3R7mmpA/exec"; // <<< THAY URL CỦA BẠN VÀO ĐÂY
+const API_URL = "https://script.google.com/macros/s/AKfycbx9d0iWCQu3uZRyM_-021zr_VSksNZn4gvyHKvhkOthOm8gwgkhKbGa4qgtuUVqeHbnqg/exec"; // <<< THAY URL CỦA BẠN VÀO ĐÂY
 
 // Lấy các phần tử DOM
 const loginSection = document.getElementById('login-section');
@@ -17,8 +17,34 @@ const loginButton = document.getElementById('login-btn');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 
+// --- (CẬP NHẬT) HÀM TÍNH NGÀY ĐIỂM DANH ---
+function getAttendanceDateString() {
+    const now = new Date();
+    
+    // Nếu trước 6h sáng (0-5h), thì vẫn tính là ngày hôm qua
+    if (now.getHours() < 6) {
+        now.setDate(now.getDate() - 1);
+    }
+    
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // +1 vì getMonth() từ 0-11
+    const year = now.getFullYear();
+    
+    // (QUAN TRỌNG) Input type="date" yêu cầu định dạng YYYY-MM-DD
+    return `${year}-${month}-${day}`;
+}
+
+// --- HÀM ĐẶT NGÀY VÀO Ô INPUT ---
+function setAttendanceDate() {
+    const dateInput = document.getElementById('attendance-date');
+    if (dateInput) {
+        dateInput.value = getAttendanceDateString();
+    }
+}
+
 // --- HÀM XỬ LÝ ĐĂNG NHẬP ---
 async function handleLogin() {
+    // ... code giữ nguyên ...
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
     if (!username || !password) {
@@ -56,6 +82,7 @@ async function handleLogin() {
 
 // --- HÀM HIỂN THỊ GIAO DIỆN LÀM VIỆC ---
 function showDashboard(name, groups) {
+    // ... code giữ nguyên ...
     loginSection.style.display = 'none';
     welcomeSection.style.display = 'block';
     mainContainer.style.maxWidth = '800px';
@@ -65,7 +92,7 @@ function showDashboard(name, groups) {
     dropdown.innerHTML = '';
     const defaultOption = document.createElement('option');
     defaultOption.value = "";
-    defaultOption.text = "-- Vui lòng chọn một tổ --";
+    defaultOption.text = "--Chọn List--";
     dropdown.appendChild(defaultOption);
     
     groups.forEach(groupName => {
@@ -90,11 +117,14 @@ function showDashboard(name, groups) {
 
 // --- HÀM TẢI DANH SÁCH NHÂN VIÊN ---
 async function loadEmployeeList(groupName) {
+    // ... code giữ nguyên ...
     const listContainer = document.getElementById('employee-table-container');
     const spinner = document.getElementById('loading-spinner');
+    const actionButtons = document.querySelector('.table-actions'); 
     
     listContainer.innerHTML = ''; 
     spinner.style.display = 'block'; 
+    actionButtons.style.display = 'none'; 
 
     try {
         const response = await fetch(API_URL, {
@@ -103,10 +133,13 @@ async function loadEmployeeList(groupName) {
             body: JSON.stringify({ action: 'getEmployees', groupName: groupName }),
             headers: { 'Content-Type': 'text/plain;charset=utf-8' }
         });
+
         const result = await response.json();
         spinner.style.display = 'none'; 
+        
         if (result.success) {
             createEmployeeTable(result.data);
+            actionButtons.style.display = 'flex'; 
         } else {
             listContainer.innerHTML = `<p style="color: red; text-align: center;">${result.message}</p>`;
         }
@@ -117,8 +150,9 @@ async function loadEmployeeList(groupName) {
     }
 }
 
-// --- HÀM TẠO BẢNG NHÂN VIÊN (ĐÃ CẬP NHẬT) ---
+// --- HÀM TẠO BẢNG NHÂN VIÊN ---
 function createEmployeeTable(employees) {
+    // ... code giữ nguyên ...
     const listContainer = document.getElementById('employee-table-container');
     listContainer.innerHTML = ''; 
 
@@ -128,8 +162,6 @@ function createEmployeeTable(employees) {
 
     const table = document.createElement('table');
     table.className = 'employee-table';
-
-    // (CẬP NHẬT) Tiêu đề 5 cột
     const thead = document.createElement('thead');
     thead.innerHTML = `
         <tr>
@@ -142,11 +174,9 @@ function createEmployeeTable(employees) {
     `;
     table.appendChild(thead);
 
-    // (CẬP NHẬT) Nội dung 5 cột
     const tbody = document.createElement('tbody');
     employees.forEach((emp, index) => {
         const tr = document.createElement('tr');
-        // Dùng index để đảm bảo radio name là duy nhất
         const radioName = `check_emp_${index}`; 
         tr.innerHTML = `
             <td>${emp.stt}</td>
@@ -168,8 +198,9 @@ function createEmployeeTable(employees) {
     listContainer.appendChild(table);
 }
 
-// --- HÀM THÊM DÒNG MỚI VÀO BẢNG (ĐÃ CẬP NHẬT) ---
+// --- HÀM THÊM DÒNG MỚI VÀO BẢNG ---
 function addNewEmployeeRow() {
+    // ... code giữ nguyên ...
     let tableBody = document.querySelector(".employee-table tbody");
     if (!tableBody) {
         const listContainer = document.getElementById('employee-table-container');
@@ -182,7 +213,6 @@ function addNewEmployeeRow() {
     const radioName = `check_new_${newRowIndex}`;
     const newRow = document.createElement('tr');
     
-    // (CẬP NHẬT) Dòng mới 5 cột
     newRow.innerHTML = `
         <td>
             <input type="text" class="new-row-input" placeholder="STT">
@@ -204,38 +234,76 @@ function addNewEmployeeRow() {
     tableBody.appendChild(newRow); 
 }
 
-// --- HÀM XỬ LÝ GỬI (ĐÃ CẬP NHẬT) ---
+// --- HÀM XỬ LÝ GỬI ---
 function handleSubmit() {
-    alert("Nút 'Gửi điểm danh' đã được bấm! (Chức năng demo)");
-    
+    // ... code giữ nguyên (nó đã lấy giá trị từ attendance-date) ...
     const allRows = document.querySelectorAll(".employee-table tbody tr");
-    const data = [];
+    if (allRows.length === 0) {
+        alert("Không có dữ liệu để gửi.");
+        return;
+    }
+
+    let allValid = true;
+    const dataToSend = [];
+    
+    const attendanceDate = document.getElementById('attendance-date').value;
+
+    allRows.forEach(row => {
+        row.classList.remove('row-highlight-error');
+    });
+
     allRows.forEach((row, index) => {
-        
-        // (CẬP NHẬT) Lấy dữ liệu theo 5 cột
         const stt = row.cells[0].innerText || row.cells[0].querySelector('input')?.value;
         const hoTen = row.cells[1].innerText || row.cells[1].querySelector('input')?.value;
-        
         const radioName = row.querySelector('.radio-check')?.getAttribute('name');
         const checkedRadio = row.querySelector(`input[name="${radioName}"]:checked`);
-        const status = checkedRadio ? checkedRadio.value : 'chưa_check';
-        
+        const status = checkedRadio ? checkedRadio.value : null;
         const note = row.querySelector('.notes-input').value;
+
+        let rowHasError = false;
+        if (!status) { 
+            rowHasError = true;
+        }
+        const hoTenInput = row.cells[1].querySelector('input');
+        if (hoTenInput && !hoTenInput.value.trim()) {
+             rowHasError = true;
+        }
+        if (rowHasError) {
+            allValid = false;
+            row.classList.add('row-highlight-error');
+
+        }
         
-        // Bỏ maNV
-        data.push({ stt, hoTen, status, note });
+        dataToSend.push({ stt, hoTen, status, note });
     });
-    console.log("Dữ liệu chuẩn bị gửi:", data);
+
+    if (allValid) {
+        alert("Cảm ơn bạn đã gửi khảo sát.");
+        console.log("Ngày điểm danh:", attendanceDate); 
+        console.log("Dữ liệu chuẩn bị gửi:", dataToSend);
+        
+        document.getElementById('employee-list-area').style.display = 'none';
+        document.getElementById('group-dropdown').value = "";
+
+    } else {
+        alert("Vui lòng kiểm tra lại. Một số dòng (tô đỏ) chưa được tick hoặc chưa nhập Họ Tên.");
+    }
 }
 
 
-// --- GÁN SỰ KIỆN KHI TRANG TẢI XONG ---
+// --- GÁN SỰ KIỆN KHI TRANG TẢI XONG (CẬP NHẬT) ---
 document.addEventListener('DOMContentLoaded', (event) => {
+    
+    // (CẬP NHẬT) Đặt ngày điểm danh ngay khi tải trang
+    setAttendanceDate();
+
+    // Gán sự kiện cho nút Đăng nhập
     const loginBtn = document.getElementById('login-btn');
     if (loginBtn) {
         loginBtn.onclick = handleLogin;
     }
     
+    // Gán sự kiện cho phím Enter ở ô mật khẩu
     const passInput = document.getElementById('password');
     if (passInput) {
         passInput.addEventListener('keypress', function(e) {
@@ -245,11 +313,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    // Gán sự kiện cho nút Thêm
     const addRowBtn = document.getElementById('add-row-btn');
     if (addRowBtn) {
         addRowBtn.onclick = addNewEmployeeRow;
     }
 
+    // Gán sự kiện cho nút Gửi
     const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) {
         submitBtn.onclick = handleSubmit;
