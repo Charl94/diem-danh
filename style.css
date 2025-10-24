@@ -75,35 +75,43 @@ body {
     flex-direction: column;
     gap: 0.75rem;
 }
-.recheck-task-item {
+.recheck-task-item { /* Đã cập nhật */
     background-color: #f9f9f9;
     padding: 0.8rem 1rem;
     border-radius: 6px;
     border: 1px solid #e0e0e0;
     font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap; /* Cho phép xuống dòng nếu cần */
-    gap: 0.3rem 0.8rem; /* Khoảng cách dọc và ngang */
+    /* Bỏ: display: flex; align-items: center; flex-wrap: wrap; gap: ... */
 }
 .recheck-task-item.completed {
     background-color: #e8f5e9; /* Nền xanh lá nhạt */
     border-color: #c8e6c9;
 }
-.task-icon { margin-right: 0.2rem; display: inline-block; } /* Thêm display */
-.task-action {
-    margin-left: auto; /* Đẩy link sang phải */
+.task-info { /* (MỚI) Style cho dòng thông tin */
+    margin-bottom: 0.5rem; /* Khoảng cách giữa 2 dòng */
+    display: flex; /* Giữ icon và text trên 1 hàng */
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép wrap nếu quá dài */
+    gap: 0.3rem 0.8rem; /* Khoảng cách trong dòng info */
+}
+.task-actions-row { /* (MỚI) Style cho dòng chứa action link */
+    text-align: right; /* Căn phải link */
+}
+.task-icon { margin-right: 0.2rem; display: inline-block; }
+.task-action { /* Đã cập nhật */
+    /* Bỏ: margin-left: auto; */
     color: #007bff;
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
-    padding: 0.2rem 0.4rem; /* Thêm padding nhỏ */
-    border-radius: 4px; /* Bo góc */
-    transition: background-color 0.2s; /* Hiệu ứng hover */
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: inline-block; /* Để padding hiển thị đúng */
 }
 .task-action:hover {
     text-decoration: underline;
-    background-color: rgba(0, 123, 255, 0.1); /* Nền xanh nhạt khi hover */
+    background-color: rgba(0, 123, 255, 0.1);
 }
 
 
@@ -261,4 +269,21 @@ input[disabled], select[disabled], button[disabled] {
     color: white !important; /* Đảm bảo chữ vẫn trắng */
     opacity: 0.8; /* Giữ độ mờ */
     cursor: wait;
+}
+employee-table tr.label-row td { /* Áp dụng cho các ô <td> trong dòng label */
+    background-color: #e9ecef; /* Màu nền xám nhạt (hoặc màu bạn muốn) */
+    font-weight: bold;       /* Chữ in đậm */
+    text-align: center;      /* Canh giữa chữ */
+    color: #495057;          /* Màu chữ tối hơn chút */
+}
+
+/* Ghi đè căn giữa cho ô STT nếu cần */
+.employee-table tr.label-row td { /* Áp dụng cho ô <td> duy nhất trong dòng label */
+    background-color: #DDEBF7; /* Màu nền xanh nhạt (giống file kết quả) */
+    font-weight: bold;       /* Chữ in đậm */
+    text-align: center;      /* Canh giữa chữ */
+    color: #333;             /* Màu chữ đen (hoặc màu bạn muốn) */
+    /* Bỏ các padding/border mặc định nếu cần */
+    padding: 0.75rem 0.5rem; /* Giữ padding giống các ô khác */
+    border: 1px solid #ddd;  /* Giữ border giống các ô khác */
 }
