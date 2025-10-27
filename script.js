@@ -418,21 +418,38 @@ function createEmployeeTable(employees, isEditing = false, isViewOnly = false, r
 
 // --- HÀM THÊM DÒNG MỚI ---
 function addNewEmployeeRow() {
-    let tableBody = document.querySelector(".employee-table tbody");
-    if (!tableBody) { createEmployeeTable([]); tableBody = document.querySelector(".employee-table tbody"); }
-    const newRowIndex = tableBody.rows.length; const radioName = `check_new_${newRowIndex}`;
-    const newRow = document.createElement('tr');
-    newRow.setAttribute('data-manv', ''); newRow.setAttribute('data-vitri', '');
-   // New rows are never disabled initially
-    newRow.innerHTML = `
-        <td><input type="text" class="new-row-input" placeholder="STT"></td>
-        <td><input type="text" class="new-row-input" placeholder="Họ và tên..."></td>
-        <td class="cell-center"><input type="radio" name="${radioName}" value="present" class="radio-check"></td>
-style.css
-        <td class="cell-center"><input type="radio" name="${radioName}" value="absent" class="radio-check"></td>
-        <td><input type="text" class="notes-input" placeholder="Ghi chú..."></td>
-    `;
-    tableBody.appendChild(newRow);
+    let tableBody = document.querySelector(".employee-table tbody");
+    if (!tableBody) {
+        // Nếu chưa có tbody, tạo bảng rỗng trước
+        createEmployeeTable([]);
+        tableBody = document.querySelector(".employee-table tbody");
+        if (!tableBody) return; // Vẫn không tìm thấy thì thoát
+    }
+    const newRowIndex = tableBody.rows.length;
+    const radioName = `check_new_${newRowIndex}`;
+    const newRow = document.createElement('tr');
+    newRow.setAttribute('data-manv', '');
+    newRow.setAttribute('data-vitri', '');
+
+    // ----- THÊM CLASS CSS VÀO CÁC Ô TD -----
+    newRow.innerHTML = `
+        <td class="col-stt"><input type="text" class="new-row-input" placeholder="STT"></td>
+        <td class="col-ten"><input type="text" class="new-row-input" placeholder="Họ và tên..."></td>
+        <td class="col-check cell-center"><input type="radio" name="${radioName}" value="present" class="radio-check"></td>
+        <td class="col-check cell-center"><input type="radio" name="${radioName}" value="absent" class="radio-check"></td>
+        <td class="col-ghichu"><input type="text" class="notes-input" placeholder="Ghi chú..."></td>
+    `;
+    // ----- HẾT PHẦN THÊM CLASS -----
+
+    tableBody.appendChild(newRow);
+
+    // (Tùy chọn) Tự động cuộn xuống dòng mới thêm
+    newRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // (Tùy chọn) Tự động focus vào ô nhập tên
+    const nameInput = newRow.querySelector('.col-ten input');
+    if (nameInput) {
+        nameInput.focus();
+    }
 }
 
 // --- (CẬP NHẬT) HÀM GỬI ---
